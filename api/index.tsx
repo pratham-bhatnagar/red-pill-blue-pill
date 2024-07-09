@@ -19,10 +19,10 @@ app.transaction("/vote", (c) => {
 
   return c.contract({
     abi,
-    chainId: "eip155:11155111",
+    chainId: "eip155:11155111", // change chainId
     functionName: "vote",
     args: [cid, buttonIndex == 1 ? true : false],
-    to: "0x5ad9C6E00CB9E9BB3845650D9f5eeb0224ab0943",
+    to: "0x5ad9C6E00CB9E9BB3845650D9f5eeb0224ab0943", //change to mainnet address
     value: parseEther("0.0001"),
     attribution: true,
   });
