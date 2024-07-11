@@ -19,10 +19,10 @@ app.transaction("/vote", (c) => {
 
   return c.contract({
     abi,
-    chainId: "eip155:8453",
+    chainId: "eip155:11155111",
     functionName: "vote",
     args: [cid, buttonIndex == 1 ? true : false],
-    to: "0x6893F4938BB984460fc6aBEf651be9FC71642587",
+    to: "0x5ad9c6e00cb9e9bb3845650d9f5eeb0224ab0943",
     value: parseEther("0.0001"),
     attribution: true,
   });
