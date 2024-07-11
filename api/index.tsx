@@ -19,10 +19,10 @@ app.transaction("/vote", (c) => {
 
   return c.contract({
     abi,
-    chainId: "eip155:11155111", // change chainId
+    chainId: "eip155:8453",
     functionName: "vote",
     args: [cid, buttonIndex == 1 ? true : false],
-    to: "0x5ad9C6E00CB9E9BB3845650D9f5eeb0224ab0943", //change to mainnet address
+    to: "0x6893F4938BB984460fc6aBEf651be9FC71642587",
     value: parseEther("0.0001"),
     attribution: true,
   });
@@ -30,14 +30,14 @@ app.transaction("/vote", (c) => {
 
 app.frame("/", (c) => {
   const { req } = c;
-  const url = new URL(req.url); // Get the full URL from the request
+  const url = new URL(req.url);
   contestId = url.searchParams.get("contestid");
 
   return c.res({
     image: (
       <div
         style={{
-          backgroundImage: `url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Red_and_blue_pill.jpg/2560px-Red_and_blue_pill.jpg")`,
+          backgroundImage: `url("https://d1jnqnach91gxj.cloudfront.net/red_pill_blue_pill.jpeg")`,
           alignItems: "center",
           background: "black",
           backgroundSize: "100% 100%",
@@ -52,17 +52,18 @@ app.frame("/", (c) => {
       >
         <div
           style={{
-            color: "white",
-            fontSize: 60,
+            color: "white", 
+            fontSize: 46,
             fontStyle: "normal",
             letterSpacing: "-0.025em",
             lineHeight: 1.4,
-            marginTop: 30,
-            padding: "0 120px",
+            marginTop: 350,
+            padding: "0 150px",
             whiteSpace: "pre-wrap",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 1)", 
           }}
         >
-          Pick up one pill with 0.0001
+          Choose Red Pill or Blue Pill with 0.0001 ETH
         </div>
       </div>
     ),
@@ -80,12 +81,12 @@ app.frame("/", (c) => {
 
 app.frame("/receipt", (c) => {
   const { transactionId } = c;
-  const explorerUrl = `https://sepolia.etherscan.io/tx/${transactionId}`;
+  const explorerUrl = `https://basescan.org/tx/${transactionId}`;
   return c.res({
     image: (
       <div
         style={{
-          backgroundImage: `url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Red_and_blue_pill.jpg/2560px-Red_and_blue_pill.jpg")`,
+          backgroundImage: `url("https://d1jnqnach91gxj.cloudfront.net/red_pill_blue_pill.jpeg")`,
           alignItems: "center",
           background: "black",
           backgroundSize: "100% 100%",
@@ -100,14 +101,15 @@ app.frame("/receipt", (c) => {
       >
         <div
           style={{
-            color: "white",
-            fontSize: 60,
+            color: "white", 
+            fontSize: 50,
             fontStyle: "normal",
             letterSpacing: "-0.025em",
             lineHeight: 1.4,
-            marginTop: 30,
-            padding: "0 120px",
+            marginTop: 50,
+            padding: "0 150px",
             whiteSpace: "pre-wrap",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)", 
           }}
         >
           Thanks for voting!
