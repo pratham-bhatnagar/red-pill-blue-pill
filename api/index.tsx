@@ -12,27 +12,10 @@ export const app = new Frog({
 
 let contestId: string | null;
 
-app.transaction("/vote", (c) => {
-  const { buttonIndex } = c;
-  let cid: number | bigint = contestId === null ? 1 : parseInt(contestId);
-  cid = BigInt(cid);
-
-  return c.contract({
-    abi,
-    chainId: "eip155:11155111",
-    functionName: "vote",
-    args: [cid, buttonIndex == 1 ? true : false],
-    to: "0x5ad9c6e00cb9e9bb3845650d9f5eeb0224ab0943",
-    value: parseEther("0.0001"),
-    attribution: true,
-  });
-});
-
 app.frame("/", (c) => {
   const { req } = c;
   const url = new URL(req.url);
   contestId = url.searchParams.get("contestid");
-
   return c.res({
     image: (
       <div
@@ -52,7 +35,7 @@ app.frame("/", (c) => {
       >
         <div
           style={{
-            color: "white", 
+            color: "white",
             fontSize: 46,
             fontStyle: "normal",
             letterSpacing: "-0.025em",
@@ -60,7 +43,7 @@ app.frame("/", (c) => {
             marginTop: 350,
             padding: "0 150px",
             whiteSpace: "pre-wrap",
-            textShadow: "2px 2px 4px rgba(0, 0, 0, 1)", 
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 1)",
           }}
         >
           Choose Red Pill or Blue Pill with 0.0001 ETH
@@ -76,6 +59,29 @@ app.frame("/", (c) => {
         Blue Pill
       </Button.Transaction>,
     ],
+  });
+});
+
+app.transaction("/vote", (c) => {
+  const { buttonIndex } = c;
+  const _contestId = contestId;
+  let cid: number =
+    _contestId === null ||
+    Number.isNaN(_contestId) ||
+    _contestId === "" ||
+    Number.isNaN(parseInt(_contestId))
+      ? 1
+      : parseInt(_contestId);
+  const _cid = BigInt(cid);
+
+  return c.contract({
+    abi,
+    chainId: "eip155:11155111",
+    functionName: "vote",
+    args: [_cid, buttonIndex === 1 ? true : false],
+    to: "0x5ad9C6E00CB9E9BB3845650D9f5eeb0224ab0943",
+    value: parseEther("0.0001", "wei"),
+    attribution: true,
   });
 });
 
@@ -101,7 +107,7 @@ app.frame("/receipt", (c) => {
       >
         <div
           style={{
-            color: "white", 
+            color: "white",
             fontSize: 50,
             fontStyle: "normal",
             letterSpacing: "-0.025em",
@@ -109,7 +115,7 @@ app.frame("/receipt", (c) => {
             marginTop: 50,
             padding: "0 150px",
             whiteSpace: "pre-wrap",
-            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)", 
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
           }}
         >
           Thanks for voting!
